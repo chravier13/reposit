@@ -20,6 +20,7 @@ export default function PlayPage() {
   const [finalPrize, setFinalPrize] = useState(null)
   const [showConfetti, setShowConfetti] = useState(false)
   const [tokenCount, setTokenCount] = useState(2)
+  const [isCreditsRefilled, setIsCreditsRefilled] = useState(false)
 
   const prices = {
     1: 5,
@@ -149,6 +150,10 @@ export default function PlayPage() {
 
   const handleBuyTokens = () => {
     setTokenCount((prev) => prev + selectedCredits)
+    setIsCreditsRefilled(true)
+    setTimeout(() => {
+      setIsCreditsRefilled(false)
+    }, 1000)
   }
 
   return (
@@ -168,8 +173,8 @@ export default function PlayPage() {
           </div>
 
           <div
-            className="bg-white rounded-3xl p-8 md:p-12 max-w-5xl mx-auto"
-            style={{ boxShadow: "0 0 30px rgba(0, 0, 0, 0.1), 0 0 60px rgba(0, 0, 0, 0.05)" }}
+            className="bg-white rounded-3xl p-8 md:p-12 max-w-5xl mx-auto my-10"
+            style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.05), 0 0 40px rgba(0, 0, 0, 0.03)" }}
           >
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               {/* Left Column - Gatcha Machine */}
@@ -381,16 +386,17 @@ export default function PlayPage() {
                   <Button
                     variant="outline"
                     size="lg"
+                    onClick={handleBuyTokens}
                     className="w-full border-2 py-6 text-lg font-semibold rounded-full hover:bg-black/5"
                   >
-                    Add to Cart
+                    {isCreditsRefilled ? "Credits Refilled" : "Add to Cart"}
                   </Button>
                   <Button
                     onClick={handleBuyTokens}
                     size="lg"
                     className="w-full bg-gradient-to-r from-[#b38327] via-[#ffbd59] to-[#ffd699] hover:from-[#a37216] hover:via-[#eead48] hover:to-[#eec588] text-black rounded-full py-6 text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
                   >
-                    Buy it Now
+                    {isCreditsRefilled ? "Credits Refilled" : "Buy it Now"}
                   </Button>
                 </div>
               </div>
